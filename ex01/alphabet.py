@@ -4,32 +4,30 @@ x = 10
 y = 2
 z = 5
 count = 0
+def main():
+    st = datetime.datetime.now()
+    play = game()
+    et = datetime.datetime.now()
+    if play == 1:
+        print(f"クリアタイム:{(et-st).seconds}秒")
+
 
 def mozi():
-    global x
+    global x,y2
     alphabetlist = [chr(c+65) for c in range(26)]
     mozilist = random.sample(alphabetlist,x)
-    return mozilist
+    k_mozilist = random.sample(mozilist,y)
+    ans = list(set(mozilist)-set(k_mozilist))
+    return mozilist,k_mozilist,ans
 
-def mozi2(a):
-    global y
-    k_mozilist = random.sample(a,y)
-    return k_mozilist
-
-
-def hiyouzi(a,b):
-    ans = list(set(a)-set(b))
-    return ans
 
 def game():
-    global count,z,x,y
+    global count,z,x,y,flag
     count = z
+    flag = 0
     while count:
-        alpha1 = mozi()
-        alpha2 = mozi2(alpha1)
-        alpha_ans = hiyouzi(alpha1,alpha2)
+        alpha1,alpha2,alpha_ans = mozi()
         print(f"対象文字\n{alpha1}")
-        print(f"欠損文字\n{alpha2}")
         print(f"表示文字\n{alpha_ans}")
         ans1 = int(input("欠損文字はいくつあるでしょうか？ "))
         if ans1 == y:
@@ -38,14 +36,13 @@ def game():
             ans3 = input("2つ目の文字を入力してください ")
             if ans2 and ans3 in alpha2:
                print("正解です")
-               break
+               flag = 1
+               return flag
             if not ans2 in alpha2:
                 print("不正解です。またチャレンジしてください")
                 count -= 1
 
 if __name__ == "__main__":
-    game()
-
-        
+    main()
 
 
