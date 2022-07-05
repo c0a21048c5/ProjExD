@@ -41,7 +41,6 @@ def main():
     bombimg_rect.centery = random.randint(0,screen_rect.height)
     vx,vy = +1,+1
 
-
     bombimg_sfc2 = pg.Surface((20,20))
     bombimg_sfc2.set_colorkey((0,0,0))
     pg.draw.circle(bombimg_sfc2,(255,0,0),(10,10),10)
@@ -49,7 +48,6 @@ def main():
     bombimg_rect2.centerx = bombimg_rect.width
     bombimg_rect2.centery = bombimg_rect.height
     vx2,vy2 = +1,+1
-
 
     while True:
         screen_sfc.blit(bgimage_sfc,bgimage_rect)
@@ -61,25 +59,22 @@ def main():
         key_states = pg.key.get_pressed()
         if key_states[pg.K_UP] == True or key_states[pg.K_w] == True :
             kkimg_rect.centery -= 1
+            if check_bound(kkimg_rect,screen_rect) == (-1,1) or check_bound(kkimg_rect,screen_rect) == (1,-1):
+                kkimg_rect.centery += 1
         if key_states[pg.K_DOWN] == True or key_states[pg.K_s] == True:
             kkimg_rect.centery += 1
+            if check_bound(kkimg_rect,screen_rect) == (-1,1) or check_bound(kkimg_rect,screen_rect) == (1,-1):
+                kkimg_rect.centery -= 1
         if key_states[pg.K_LEFT] == True or key_states[pg.K_a] == True:
             kkimg_rect.centerx -= 1
+            if check_bound(kkimg_rect,screen_rect) == (-1,1) or check_bound(kkimg_rect,screen_rect) == (1,-1):
+                kkimg_rect.centerx += 1
         if key_states[pg.K_RIGHT] == True or key_states[pg.K_d] == True:
             kkimg_rect.centerx += 1
-        
-        if check_bound(kkimg_rect,screen_rect) != (1,1):
             if key_states[pg.K_UP] == True or key_states[pg.K_w] == True :
-                kkimg_rect.centery += 1
-            if key_states[pg.K_DOWN] == True or key_states[pg.K_s] == True:
-                kkimg_rect.centery -= 1
-            if key_states[pg.K_LEFT] == True or key_states[pg.K_a] == True:
-                kkimg_rect.centerx += 1
-            if key_states[pg.K_RIGHT] == True or key_states[pg.K_d] == True:
                 kkimg_rect.centerx -= 1
 
         screen_sfc.blit(kkimg_sfc,kkimg_rect)
-
 
         bombimg_rect.move_ip(vx,vy)
         bombimg_rect2.move_ip(-vx2,vy2)
@@ -102,10 +97,6 @@ def main():
 
         pg.display.update()
         clock.tick(1000)
-
-
-
-
 
 if __name__ == "__main__":
     pg.init()
